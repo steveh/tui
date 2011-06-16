@@ -1,3 +1,30 @@
 #!/usr/bin/env ruby
 
+require "commander/import"
 require "tui"
+
+program :version, Tui::VERSION
+program :description, Tui::DESCRIPTION
+
+command :upload do |c|
+  c.syntax = "upload [file]"
+  c.description = "Uploads a file"
+  c.when_called do |args, options|
+    upload = Tui::Upload.new(args[0])
+
+    say "Requesting authorization"
+
+    authorization = Tui::UploadAuthorization.new(upload)
+
+    say "Uploading #{upload.path} (#{upload.size} bytes)"
+
+    bar = Commander::UI::ProgressBar.new(upload.chunks, { :complete_message => "Uploaded" })
+
+    upload.perform(authorization) do |bytes_written, bytes_total|
+      bar.increment
+      true
+    end
+  end
+end
+
+alias_command :u, :upload
