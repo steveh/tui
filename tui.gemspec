@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "commander", "~> 4.0"
   s.add_dependency "excon", "~> 0.6"
   s.add_dependency "mime-types", "~> 1.1"
+  s.add_dependency "json"
 
   s.add_development_dependency "rspec", "~> 2.6"
 end

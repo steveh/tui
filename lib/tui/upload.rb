@@ -1,8 +1,5 @@
 require "digest/md5"
-require "time"
 require "mime/types"
-require "base64"
-require "openssl"
 require "excon"
 
 module Tui
@@ -22,6 +19,19 @@ module Tui
 
     def size
       @size ||= File.size(path)
+    end
+
+    def original_filename
+      @original_filename ||= File.basename(path)
+    end
+
+    def md5sum
+      @digest ||= Digest::MD5.file(path)
+      @md5sum ||= @digest.hexdigest
+    end
+
+    def mime_type
+      @mime_type ||= MIME::Types.type_for(path).first.to_s
     end
 
     def chunks
@@ -44,6 +54,15 @@ module Tui
       )
 
       true
+    end
+
+    def as_json
+      {
+        :original_filename => original_filename,
+        :md5sum            => md5sum,
+        :size              => size,
+        :mime_type         => mime_type,
+      }
     end
 
     private

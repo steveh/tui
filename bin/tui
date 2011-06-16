@@ -13,8 +13,8 @@ command :upload do |c|
     upload = Tui::Upload.new(args[0])
 
     say "Requesting authorization"
-
-    authorization = Tui::UploadAuthorization.new(upload)
+    request = Tui::Authorization::Request.new(upload)
+    authorization = request.perform
 
     say "Uploading #{upload.path} (#{upload.size} bytes)"
 
