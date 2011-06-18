@@ -16,6 +16,8 @@ command :upload do |c|
     request = Tui::Authorization::Request.new(upload)
     authorization = request.perform
 
+    say "File URL will be #{authorization.short_url}"
+
     say "Uploading #{upload.path} (#{upload.size} bytes)"
 
     bar = Commander::UI::ProgressBar.new(upload.chunks, { :complete_message => "Uploaded" })

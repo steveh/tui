@@ -2,11 +2,12 @@ module Tui
   module Authorization
     class Response
 
-      attr_reader :remote_url, :headers
+      attr_reader :short_url, :upload_url, :headers
 
       def initialize(json)
-        @remote_url = json.delete(:remote_url)
-        @headers = json.delete(:headers)
+        @short_url = json.delete("short_url")
+        @upload_url = json.delete("upload_url")
+        @headers = json.delete("headers")
       end
 
     end

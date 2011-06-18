@@ -39,7 +39,7 @@ module Tui
     end
 
     def perform(authorization, &block)
-      connection = Excon.new(authorization.remote_url)
+      connection = Excon.new(authorization.upload_url)
 
       headers = {
         "User-Agent" => user_agent,
@@ -61,7 +61,7 @@ module Tui
         :original_filename => original_filename,
         :md5sum            => md5sum,
         :size              => size,
-        :mime_type         => mime_type,
+        :mime_type         => mime_type
       }
     end
 
